@@ -20,7 +20,7 @@ public class Payment {
     private Timestamp paymentDate;
 
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "application_id", nullable = false)
     private Application application;
 

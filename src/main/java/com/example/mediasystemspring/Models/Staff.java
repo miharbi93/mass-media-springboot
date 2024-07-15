@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class Staff extends User{
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "media_id", nullable = false)
     private MediaChannel mediaChannel;
 

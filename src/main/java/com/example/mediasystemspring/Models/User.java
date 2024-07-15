@@ -1,4 +1,5 @@
 package com.example.mediasystemspring.Models;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -6,6 +7,8 @@ import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -33,7 +36,7 @@ public  class User {
     private LocalDate createdDate;
 
     @Column(nullable = false)
-    private String status;
+    private String account_status;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -89,11 +92,16 @@ public  class User {
         this.createdDate = createdDate;
     }
 
-    public String getStatus() {
-        return status;
+
+
+
+
+
+    public String getAccount_status() {
+        return account_status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setAccount_status(String account_status) {
+        this.account_status = account_status;
     }
 }

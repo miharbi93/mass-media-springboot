@@ -46,7 +46,7 @@ public class CustomerService {
 
         existingCustomer.setEmail(customer.getEmail());
 
-        existingCustomer.setStatus(customer.getStatus());
+        existingCustomer.setAccount_status(customer.getAccount_status());
 
         existingCustomer.setRole(customer.getRole());
 

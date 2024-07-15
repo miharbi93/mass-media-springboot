@@ -1,5 +1,6 @@
 package com.example.mediasystemspring.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -38,8 +39,9 @@ public class Application {
 
     private Integer dayPackage;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
+    @JsonBackReference
     private Customer customer;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -150,11 +152,10 @@ public class Application {
 
 
 
-
-
-
-
-
+//    @ManyToOne
+//    @JsonBackReference
+//    private User user;
+//
 
 
 }

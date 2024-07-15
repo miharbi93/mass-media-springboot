@@ -47,6 +47,8 @@ public class StaffService {
 
         existingStaff.setRole(staff.getRole());
 
+        existingStaff.setAccount_status(staff.getAccount_status());
+
         existingStaff.setMediaChannel(staff.getMediaChannel());
 
         return staffRepository.save(existingStaff);
