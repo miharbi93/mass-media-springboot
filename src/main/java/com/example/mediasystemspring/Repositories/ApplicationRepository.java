@@ -18,4 +18,6 @@ public interface ApplicationRepository extends JpaRepository<Application,Long> {
 
     @EntityGraph(attributePaths = {"customer"})
     List<Application> findAll();
+
+
 }

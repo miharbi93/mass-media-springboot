@@ -49,7 +49,7 @@ public class Application {
     private MediaService mediaService;
 
 
-    @OneToOne(mappedBy = "application", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "application")
     @JsonManagedReference
     private ReviewApplication reviewApplication;
 
