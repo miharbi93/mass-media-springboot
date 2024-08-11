@@ -25,4 +25,10 @@ public class ReviewApplicationAPI {
         return ResponseEntity.ok("Review cancelled successfully");
 
     }
+
+    @PatchMapping("/applications/{applicationId}/reivewstatus")
+    public ResponseEntity<String> acceptedORrejected(@PathVariable Long applicationId){
+        reviewApplicationService.rejectOrAcceptReview(applicationId);
+        return ResponseEntity.ok("Review Status Change successfully");
+    }
 }

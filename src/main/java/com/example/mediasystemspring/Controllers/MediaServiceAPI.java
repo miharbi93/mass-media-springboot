@@ -18,7 +18,7 @@ public class MediaServiceAPI {
     @Autowired
     private MediaServiceService mediaServiceService;
 
-    @GetMapping("/id{serviceId}")
+    @GetMapping("/id/{serviceId}")
     private ResponseEntity<?> getService(@PathVariable Long serviceId){
         try {
             Optional<MediaService> mediaServiceOptional = mediaServiceService.getById(serviceId);
@@ -71,6 +71,15 @@ public class MediaServiceAPI {
     @GetMapping("/count")
     public Long count(){
         return mediaServiceService.countMediaService();
+    }
+
+    @PutMapping("/update/{serviceId}")
+    public ResponseEntity<MediaService> updateMediaService(@PathVariable Long serviceId, @RequestBody MediaService mediaService) {
+
+        MediaService updatedMediaService = mediaServiceService.updateMediaService(serviceId, mediaService);
+
+        return new ResponseEntity<>(updatedMediaService, HttpStatus.OK);
+
     }
 
 }

@@ -31,7 +31,7 @@ public class PaymentAPI{
 
     private PaymentRepository paymentRepository;
     @GetMapping("/{applicationId}")
-    public ResponseEntity<Payment> getPaymentByApplicationId(@PathVariable Long applicationId) {
+    public ResponseEntity<Payment>  getPaymentByApplicationId(@PathVariable Long applicationId) {
         Payment payment = paymentRepository.findByApplication_ApplicationId(applicationId);
         if (payment != null) {
             return ResponseEntity.ok(payment);
@@ -45,7 +45,7 @@ public class PaymentAPI{
         Application application = applicationRepository.findById(applicationId).orElseThrow();
         Payment payment = new Payment();
         payment.setApplication(application);
-        payment.setPaidAmount(0L);
+        payment.setPaidAmount(0L); 
         paymentService.save(payment);
         return new ResponseEntity<>(payment.getControlNumber(), HttpStatus.OK);
     }

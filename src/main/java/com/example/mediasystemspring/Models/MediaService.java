@@ -56,4 +56,12 @@ public class MediaService {
     public void setMediaChannel(MediaChannel mediaChannel) {
         this.mediaChannel = mediaChannel;
     }
+
+    public String getServiceDescription() {
+        return serviceDescription;
+    }
+
+    public void setServiceDescription(String serviceDescription) {
+        this.serviceDescription = serviceDescription;
+    }
 }

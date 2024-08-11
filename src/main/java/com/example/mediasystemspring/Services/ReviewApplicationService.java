@@ -20,9 +20,9 @@ public class ReviewApplicationService {
 
     public void cancelReview(Long applicationId) {
         Application application = applicationRepository.findApplicationByApplicationId(applicationId);
-        if (application!= null) {
+        if (application != null) {
             ReviewApplication reviewApplication = application.getReviewApplication();
-            if (reviewApplication!= null) {
+            if (reviewApplication != null) {
                 reviewApplication.setReviewStatus("Cancel");
                 application.setReviewApplication(reviewApplication); // Update the reviewApplication field on the application object
                 applicationRepository.save(application); // Save the application object
@@ -31,6 +31,31 @@ public class ReviewApplicationService {
             }
         } else {
             throw new RuntimeException("Application not found");
+        }
+    }
+
+    public void rejectOrAcceptReview(Long applicationId) {
+        Application application = applicationRepository.findApplicationByApplicationId(applicationId);
+        if (application != null) {
+            ReviewApplication reviewApplication = application.getReviewApplication();
+            if (reviewApplication != null) {
+                if (reviewApplication.getReviewStatus().equals("pending")) {
+                    reviewApplication.setReviewStatus("Accepted");
+                }else {
+                    if (reviewApplication.getReviewStatus().equals("Accepted")) {
+                        reviewApplication.setReviewStatus("Rejected");
+                    } else {
+                        reviewApplication.setReviewStatus("Accepted");
+                    }
+                }
+                application.setReviewApplication(reviewApplication);
+                applicationRepository.save(application);
+            }else {
+                throw new RuntimeException("Review not found for application");
+            }
+        }else{
+            throw new RuntimeException("Application not found");
+
         }
     }
 }

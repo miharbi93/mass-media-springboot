@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.print.attribute.standard.Media;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,16 @@ public class MediaServiceService {
     public Long countMediaService(){
         return mediaServiceRepository.count();
     }
+
+    public MediaService updateMediaService(Long serviceId, MediaService mediaService){
+        MediaService existingService = mediaServiceRepository.findById(serviceId).orElseThrow();
+        existingService.setServiceName(mediaService.getServiceName());
+        existingService.setServicePrice(mediaService.getServicePrice());
+        existingService.setServiceDescription(mediaService.getServiceDescription());
+        return mediaServiceRepository.save(existingService);
+    }
+
+
 
 
 }

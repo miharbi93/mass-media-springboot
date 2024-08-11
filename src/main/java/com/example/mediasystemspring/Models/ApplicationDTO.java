@@ -23,6 +23,8 @@ public class ApplicationDTO {
     private String mediaServiceName;
     private String email;
     private Long mediaId;
+    private Long userId;
+    private String reviewStatus;
 
     public ApplicationDTO(Application application) {
         this.mediaServiceName = application.getMediaService().getServiceName();
@@ -41,5 +43,8 @@ public class ApplicationDTO {
         this.dayPackage = application.getDayPackage();
         this.username = application.getCustomer().getUsername();
         this.mediaServiceId = Long.valueOf(String.valueOf(application.getMediaService().getServiceId()));
+        this.userId = application.getCustomer().getUserId();
+        this.reviewStatus = application.getReviewApplication().getReviewStatus();
+
     }
 }
