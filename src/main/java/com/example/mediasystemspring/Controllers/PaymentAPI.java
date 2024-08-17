@@ -1,8 +1,10 @@
 package com.example.mediasystemspring.Controllers;
 
+import com.example.mediasystemspring.DTO.PaymentDTO;
 import com.example.mediasystemspring.DTO.PaymentRequest;
 import com.example.mediasystemspring.DTO.PaymentResponse;
 import com.example.mediasystemspring.Models.Application;
+import com.example.mediasystemspring.Models.ApplicationDTO;
 import com.example.mediasystemspring.Models.Payment;
 import com.example.mediasystemspring.Repositories.ApplicationRepository;
 import com.example.mediasystemspring.Repositories.PaymentRepository;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/payment")
@@ -73,7 +76,10 @@ public class PaymentAPI{
         if (payment == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        payment.setPaidAmount(paymentRequest.getPaidAmount());
+
+        // Accumulate the new payment amount
+        payment.setPaidAmount(payment.getPaidAmount() + paymentRequest.getPaidAmount());
+
         payment.setPaymentDate(new Timestamp(System.currentTimeMillis()));
         paymentService.save(payment);
         PaymentResponse paymentResponse = new PaymentResponse(payment);
@@ -94,4 +100,35 @@ public class PaymentAPI{
             return new ResponseEntity<>("No connection Try Again",HttpStatus.BAD_REQUEST);
         }
     }
+//
+    @GetMapping("/payments")
+    public List<PaymentDTO> getAllPayments(){
+        return paymentService.getPayments().stream().map(PaymentDTO::new).collect(Collectors.toList());
+    }
+
+        @GetMapping("/Id/{paymentId}")
+
+        public ResponseEntity<PaymentDTO> getPayment(@PathVariable Long paymentId) {
+            Payment payment = paymentRepository.findById(paymentId).orElseThrow();
+            PaymentDTO paymentDTO = new PaymentDTO(payment);
+            return ResponseEntity.ok(paymentDTO);
+    }
+//
+//    @GetMapping
+//
+//    public ResponseEntity<List<PaymentDTO>> getAllPayments() {
+//
+//        List<Payment> payments = paymentRepository.findAll();
+//
+//        List<PaymentDTO> paymentDTOs = payments.stream()
+//
+//                .map(payment -> new PaymentDTO(payment))
+//
+//                .collect(Collectors.toList());
+//
+//        return ResponseEntity.ok(paymentDTOs);
+//
+//    }
+
+
 }

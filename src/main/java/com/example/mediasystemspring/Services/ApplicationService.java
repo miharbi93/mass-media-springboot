@@ -4,10 +4,7 @@ import com.example.mediasystemspring.Models.Application;
 import com.example.mediasystemspring.Models.Customer;
 import com.example.mediasystemspring.Models.MediaService;
 import com.example.mediasystemspring.Models.ReviewApplication;
-import com.example.mediasystemspring.Repositories.ApplicationRepository;
-import com.example.mediasystemspring.Repositories.CustomerRepository;
-import com.example.mediasystemspring.Repositories.MediaServiceRepository;
-import com.example.mediasystemspring.Repositories.ReviewApplicationRepository;
+import com.example.mediasystemspring.Repositories.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +30,9 @@ public class ApplicationService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    PaymentRepository paymentRepository;
 
     @Autowired
     private ReviewApplicationRepository reviewApplicationRepository;
@@ -91,6 +91,7 @@ public class ApplicationService {
         return BigDecimal.valueOf(service.getServicePrice()).multiply(BigDecimal.valueOf(days));
     }
 
+
     public List<Application> getAllApplications() {
         return applicationRepository.findAll();
     }
@@ -110,6 +111,13 @@ public class ApplicationService {
 
     public List<Application> getAllApplicationsWithCustomerDetails() {
         return applicationRepository.findAll();
+    }
+
+    public void deleteApplication(Long applicationId){
+        Application application = applicationRepository.findById(applicationId).orElseThrow();
+        reviewApplicationRepository.deleteById(applicationId);
+        paymentRepository.deleteById(applicationId);
+        applicationRepository.deleteById(applicationId);
     }
 
 }

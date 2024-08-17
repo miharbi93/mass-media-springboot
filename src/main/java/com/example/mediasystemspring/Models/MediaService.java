@@ -1,7 +1,10 @@
 package com.example.mediasystemspring.Models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Data
@@ -20,6 +23,7 @@ public class MediaService {
 
     @Column(nullable = false)
     private Long servicePrice;
+
 
     @ManyToOne
     @JoinColumn(name = "mass_media_channel_id", nullable = false)

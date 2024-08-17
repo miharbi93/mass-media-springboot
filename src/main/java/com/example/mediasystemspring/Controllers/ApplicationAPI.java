@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -117,6 +118,27 @@ public class ApplicationAPI {
     public List<ApplicationDTO> getAllApplications() {
         return applicationService.getAllApplications().stream().map(ApplicationDTO::new).collect(Collectors.toList());
 
+    }
+
+    @DeleteMapping("delete/{applicationId}")
+    public ResponseEntity<?> deleteApplication(@PathVariable Long applicationId){
+        try {
+            Optional<Application> application = applicationRepository.findById(applicationId);
+            if (application.isPresent()){
+                applicationRepository.deleteById(applicationId);
+                return new ResponseEntity<>("Deleted Successfull",HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>("No Application with Id "+ applicationId , HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception exception){
+            return new ResponseEntity<>("No connection",HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/del/{applicationId}")
+    public ResponseEntity<?> delete(@PathVariable Long applicationId){
+        applicationService.deleteApplication(applicationId);
+        return new ResponseEntity<>("Deleted Successfull",HttpStatus.OK);
     }
 
 

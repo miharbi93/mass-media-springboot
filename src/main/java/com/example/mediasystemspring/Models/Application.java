@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -22,7 +24,6 @@ public class Application {
 
     private BigDecimal amount;
 
-    private String status;
 
     @Column(nullable = false, length = 1000000)
     @Lob
@@ -39,12 +40,15 @@ public class Application {
 
     private Integer dayPackage;
 
+
+
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference
     private Customer customer;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "media_service_id", nullable = false)
     private MediaService mediaService;
 
@@ -52,6 +56,10 @@ public class Application {
     @OneToOne(mappedBy = "application")
     @JsonManagedReference
     private ReviewApplication reviewApplication;
+
+
+
+
 
     public ReviewApplication getReviewApplication() {
         return reviewApplication;
@@ -83,14 +91,6 @@ public class Application {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public byte[] getAdvertiseDocument() {

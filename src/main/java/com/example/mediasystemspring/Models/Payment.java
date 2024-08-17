@@ -1,7 +1,11 @@
 package com.example.mediasystemspring.Models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -25,9 +29,11 @@ public class Payment {
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp paymentDate;
 
+
     @OneToOne
     @JoinColumn(name = "application_id", nullable = false)
     private Application application;
+
 
     public Payment() {
         this.paymentDate = new Timestamp(System.currentTimeMillis());

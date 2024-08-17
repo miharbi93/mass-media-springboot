@@ -3,6 +3,8 @@ package com.example.mediasystemspring.Models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -21,6 +23,13 @@ public class ReviewApplication {
 
     @Column(nullable = false, updatable = true)
     private String reviewStatus;
+
+//    @OneToOne
+//    @JoinColumn(name = "application_id", nullable = false)
+//    @JsonBackReference
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    private Application application;
+
 
     @OneToOne
     @JoinColumn(name = "application_id", nullable = false)

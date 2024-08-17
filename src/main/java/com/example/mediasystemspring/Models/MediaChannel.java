@@ -1,10 +1,15 @@
 package com.example.mediasystemspring.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -33,12 +38,14 @@ public class MediaChannel {
     @Column(length = 100000)
     private byte[] image;
 
+
     @Column(nullable = false)
     @CreatedDate
     private LocalDate createdDate;
 
     @Column(nullable = false)
     private String status;
+
 
     public Long getMediaId() {
         return mediaId;

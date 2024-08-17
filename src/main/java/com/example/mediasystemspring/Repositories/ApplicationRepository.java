@@ -16,6 +16,8 @@ public interface ApplicationRepository extends JpaRepository<Application,Long> {
 
     List<Application> findByCustomer(Customer customer);
 
+    void deleteById(Long applicationId);
+
     @EntityGraph(attributePaths = {"customer"})
     List<Application> findAll();
 

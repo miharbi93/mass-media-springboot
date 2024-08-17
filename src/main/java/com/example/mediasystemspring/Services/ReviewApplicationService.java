@@ -23,7 +23,7 @@ public class ReviewApplicationService {
         if (application != null) {
             ReviewApplication reviewApplication = application.getReviewApplication();
             if (reviewApplication != null) {
-                reviewApplication.setReviewStatus("Cancel");
+                reviewApplication.setReviewStatus("Canceled");
                 application.setReviewApplication(reviewApplication); // Update the reviewApplication field on the application object
                 applicationRepository.save(application); // Save the application object
             } else {

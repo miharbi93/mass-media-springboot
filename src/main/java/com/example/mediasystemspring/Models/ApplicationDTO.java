@@ -25,6 +25,9 @@ public class ApplicationDTO {
     private Long mediaId;
     private Long userId;
     private String reviewStatus;
+    private Long paidAmount;
+
+
 
     public ApplicationDTO(Application application) {
         this.mediaServiceName = application.getMediaService().getServiceName();
@@ -45,6 +48,10 @@ public class ApplicationDTO {
         this.mediaServiceId = Long.valueOf(String.valueOf(application.getMediaService().getServiceId()));
         this.userId = application.getCustomer().getUserId();
         this.reviewStatus = application.getReviewApplication().getReviewStatus();
+
+
+
+
 
     }
 }
