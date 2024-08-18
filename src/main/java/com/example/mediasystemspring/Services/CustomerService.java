@@ -3,6 +3,7 @@ package com.example.mediasystemspring.Services;
 import com.example.mediasystemspring.Models.Customer;
 import com.example.mediasystemspring.Repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +16,9 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public List<Customer> getAll(){
         return customerRepository.findAll();
     }
@@ -24,6 +28,8 @@ public class CustomerService {
     }
 
     public Customer addCustomer(Customer customer){
+        String encryptedPassword = passwordEncoder.encode(customer.getPassword());
+        customer.setPassword(encryptedPassword);
         return customerRepository.save(customer);
     }
     public void  deleteCustomer(Long userId){
@@ -42,7 +48,10 @@ public class CustomerService {
 
         existingCustomer.setCustomerImage(customer.getCustomerImage());
 
-        existingCustomer.setPassword(customer.getPassword());
+//        existingCustomer.setPassword(customer.getPassword());
+
+        String encryptedPassword = passwordEncoder.encode(customer.getPassword());
+        existingCustomer.setPassword(encryptedPassword);
 
         existingCustomer.setEmail(customer.getEmail());
 

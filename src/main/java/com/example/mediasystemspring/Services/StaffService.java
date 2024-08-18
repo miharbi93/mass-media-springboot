@@ -3,6 +3,7 @@ package com.example.mediasystemspring.Services;
 import com.example.mediasystemspring.Models.Staff;
 import com.example.mediasystemspring.Repositories.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,11 +15,16 @@ public class StaffService {
     @Autowired
     private StaffRepository staffRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public List<Staff> getAllStaff(){
         return staffRepository.findAll();
     }
 
     public Staff addStaff(Staff staff){
+        String encryptedPassword = passwordEncoder.encode(staff.getPassword());
+        staff.setPassword(encryptedPassword);
         return staffRepository.save(staff);
     }
 
@@ -40,7 +46,9 @@ public class StaffService {
         existingStaff.setUsername(staff.getUsername());
 
         if (staff.getPassword() != null && !staff.getPassword().isEmpty()) {
-            existingStaff.setPassword(staff.getPassword());
+//            existingStaff.setPassword(staff.getPassword());
+            String encryptedPassword = passwordEncoder.encode(staff.getPassword());
+            existingStaff.setPassword(encryptedPassword);
         }
 
         existingStaff.setEmail(staff.getEmail());
