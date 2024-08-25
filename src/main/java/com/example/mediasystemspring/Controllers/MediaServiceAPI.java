@@ -32,6 +32,20 @@ public class MediaServiceAPI {
         }
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<?> allServices(){
+        try {
+            List<MediaService> mediaServiceList = mediaServiceService.getAllService();
+            if (mediaServiceList.isEmpty()){
+                return new ResponseEntity<>("No Service Found",HttpStatus.NOT_FOUND);
+            }else {
+                return new ResponseEntity<>(mediaServiceList,HttpStatus.OK);
+            }
+        }catch (Exception exception){
+            return new ResponseEntity<>("Opps Connection Fail",HttpStatus.BAD_GATEWAY);
+        }
+    }
+
     @GetMapping("/mediaId/{mediaId}")
     public ResponseEntity<?> findAllByMediaChannelMediaId(@PathVariable Long mediaId) {
         List<MediaService> mediaServices = mediaServiceService.findAllByMediaChannelMediaId(mediaId);

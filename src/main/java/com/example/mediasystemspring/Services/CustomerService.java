@@ -40,27 +40,45 @@ public class CustomerService {
         return customerRepository.count();
     }
 
-    public Customer updateCustomer(Long userId, Customer customer) {
+//    public Customer updateCustomer(Long userId, Customer customer) {
+//
+//        Customer existingCustomer = customerRepository.findById(userId).orElseThrow();
+//
+//        existingCustomer.setUsername(customer.getUsername());
+//
+//        existingCustomer.setCustomerImage(customer.getCustomerImage());
+//
+////        existingCustomer.setPassword(customer.getPassword());
+//
+//        String encryptedPassword = passwordEncoder.encode(customer.getPassword());
+//        existingCustomer.setPassword(encryptedPassword);
+//
+//        existingCustomer.setEmail(customer.getEmail());
+//
+//        existingCustomer.setAccount_status(customer.getAccount_status());
+//
+//        existingCustomer.setRole(customer.getRole());
+//
+//        return customerRepository.save(existingCustomer);
+//
+//    }
 
+    public Customer updateCustomer(Long userId, Customer customer) {
         Customer existingCustomer = customerRepository.findById(userId).orElseThrow();
 
         existingCustomer.setUsername(customer.getUsername());
-
         existingCustomer.setCustomerImage(customer.getCustomerImage());
 
-//        existingCustomer.setPassword(customer.getPassword());
-
-        String encryptedPassword = passwordEncoder.encode(customer.getPassword());
-        existingCustomer.setPassword(encryptedPassword);
+        if (!customer.getPassword().equals(existingCustomer.getPassword())) {
+            String encryptedPassword = passwordEncoder.encode(customer.getPassword());
+            existingCustomer.setPassword(encryptedPassword);
+        }
 
         existingCustomer.setEmail(customer.getEmail());
-
         existingCustomer.setAccount_status(customer.getAccount_status());
-
         existingCustomer.setRole(customer.getRole());
 
         return customerRepository.save(existingCustomer);
-
     }
 
 }

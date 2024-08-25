@@ -20,6 +20,10 @@ public class MediaServiceService {
         return mediaServiceRepository.findById(serviceId);
     }
 
+    public List<MediaService> getAllService(){
+        return mediaServiceRepository.findAll();
+    }
+
     public List<MediaService> findAllByMediaChannelMediaId(Long mediaId) {
         return mediaServiceRepository.findAllByMediaChannelMediaId(mediaId);
     }
